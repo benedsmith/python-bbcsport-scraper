@@ -25,5 +25,5 @@ The following parameters are available for league_name:
 
 * `premier-league`
 * `championship`
-* `league_one`
-* `league_two`
+* `league-one`
+* `league-two`
