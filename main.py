@@ -51,7 +51,7 @@ class LeagueTable:
             # the data needs to be split into a list then appended to the team stats
             # to access the L/D/W characters (minus the opposing team), all that's needed is:
             # get_team_info(team_name)[col][0] where col = 11,12,13,14,15
-            team_form = table.find("td", attrs={"data-reactid": (get_league_code(soup) + ".$row-" + str(a) + ".$td-11")}.text).split(".")
+            team_form = (table.find("td", attrs={"data-reactid": get_league_code(soup) + ".$row-" + str(a) + ".$td-11"}).text).split(".")
             team_stats += team_form
             self.league_table.append(team_stats)
 
@@ -71,6 +71,19 @@ class LeagueTable:
             for item in self.get_team_names():
                 print(item)
 
+    def to_string(self):
+        table_str = ""
+        for row in self.league_table:
+            line_string = ""
+            for col in range(11):
+                line_string += row[col]
+                line_string += " "
+            for col in range(11, 16):
+                line_string += row[col][0]
+            line_string += "\n"
+            table_str += line_string
+        return table_str
+
 
 l1 = LeagueTable("premier-league")
 # print(l1.league_table)
@@ -79,4 +92,5 @@ l1 = LeagueTable("premier-league")
 print(l1.get_team_info("Man Utd"))
 
 league_2 = LeagueTable("league-two")
+print(league_2.to_string())
 print(league_2.get_team_info("Notts County"))

@@ -1,7 +1,7 @@
 # python-bbcsport-scraper
 ###### Scrapes football league data from BBC Sport webpages
 Currently works for Premier league, Championship, League One and League Two.
-Takes data from `http://www.bbc.co.uk/sport/football/"+league_name+"/table`
+Takes data from `"http://www.bbc.co.uk/sport/football/"+league_name+"/table"`
 
 Usage:
 
@@ -10,8 +10,8 @@ Usage:
 # Create LeagueTable object, with the name of the league
 league_2 = LeagueTable("league-two")
 
-# Print contents
-print(league_2.league_table)
+# Print league table
+print(league_2.to_string())
 
 # Get all teams in league, in ranking order
 print(league_2.get_team_names())
