@@ -35,26 +35,27 @@ def open_page(page_url):
 
 class LeagueTable:
     def __init__(self, league_name):
+        self.league_name = league_name
+        self.page = "http://www.bbc.co.uk/sport/football/" + league_name + "/table"
         self.league_table = []
-        self.update_table(league_name)
+        self.update_table()
         self.all_teams = self.get_team_names()
 
-    def update_table(self, league_name):
-        page = "http://www.bbc.co.uk/sport/football/"+league_name+"/table"
-        page = open_page(page)
+    def update_table(self):
+        page = open_page(self.page)
         soup = bs(page, 'html.parser')
         table = soup.find("tbody", attrs={"class": "gel-long-primer"})
         self.league_table = []
-        for a in range(int(get_league_size(str(league_name)))):
+        for a in range(int(get_league_size(str(self.league_name)))):
             team_stats = []
             for i in range(11):
                 # Grab the first 10 columns, add to list of table
                 team_stats.append(table.find("td", attrs={"data-reactid":(get_league_code(soup)+".$row-"+str(a)+".$td-"+str(i))}).text)
 
-            # Because of the way column 11 is stored (team form over last 5 games
+            # Because of the way column 11 is stored (team form over last 5 games)
             # the data needs to be split into a list then appended to the team stats
             # to access the L/D/W characters (minus the opposing team), all that's needed is:
-            # get_team_info(team_name)[col][0] where col = 11,12,13,14,15
+            # get_team_info(team_name)[col][0] where col = 11,12,13,14,15, example is in to_string() function.
             team_form = (table.find("td", attrs={"data-reactid": get_league_code(soup) + ".$row-" + str(a) + ".$td-11"}).text).split(".")
             team_stats += team_form
             self.league_table.append(team_stats)
@@ -74,6 +75,12 @@ class LeagueTable:
             print("Team not found! Here are the teams in that league: \n")
             for item in self.get_team_names():
                 print(item)
+
+    def get_league_name(self):
+        return self.league_name
+
+    def get_league_url(self):
+        return self.page
 
     def to_string(self):
         table_str = ""
