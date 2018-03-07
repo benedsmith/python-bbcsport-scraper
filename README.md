@@ -13,6 +13,10 @@ league_2 = LeagueTable("league-two")
 # Print league table
 print(league_2.to_string())
 
+# Generate csv file from self.league_table
+# takes str, TypeError if not str.
+league_2.to_csv("csv_file")
+
 # Get all teams in league, in ranking order
 print(league_2.get_team_names())
 
