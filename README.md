@@ -19,6 +19,15 @@ print(league_2.get_team_names())
 # Get info from specific team. If team isn't available you'll be shown
 # which teams are available. Not case-sensitive
 print(league_2.get_team_info("Notts County"))
+
+# Updates league info from webpage. Takes a second or so.
+league_2.update_table()
+
+# Returns string url that object is scraping from
+league_2.get_league_url()
+
+# Returns string of league name
+league_2.get_league_name()
 ```
 
 The following parameters are available for league_name:
