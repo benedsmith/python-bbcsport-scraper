@@ -35,6 +35,12 @@ def open_page(page_url):
 
 class LeagueTable:
     def __init__(self, league_name):
+        '''
+        instantiation of league table array.
+        self.league_table is a 2d array where each item is a list of values from the webpage
+        self.league_table[0] is the 1st team in the league,
+        self.league_table[0][2] is the name of the 1st team in the league.
+        '''
         self.league_name = league_name
         self.page = "http://www.bbc.co.uk/sport/football/" + league_name + "/table"
         self.league_table = []
@@ -95,3 +101,16 @@ class LeagueTable:
             table_str += line_string
         return table_str
 
+    def to_csv(self, filename: str):
+        ''' Writes self.league_table to csv file
+        TypeError if filename is not string.
+        '''
+        try:
+            filename.replace(" ", "_")
+        except TypeError:
+            print("filename isn't a string, please give a string")
+        import csv
+        with open(filename, "w", newline="") as csvfile:
+            writer = csv.writer(csvfile, delimiter=",")
+            for line in self.league_table:
+                writer.writerow(line)
