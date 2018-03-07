@@ -35,12 +35,16 @@ def open_page(page_url):
 
 class LeagueTable:
     def __init__(self, league_name):
+        self.league_table = []
+        self.update_table(league_name)
+        self.all_teams = self.get_team_names()
+
+    def update_table(self, league_name):
         page = "http://www.bbc.co.uk/sport/football/"+league_name+"/table"
         page = open_page(page)
         soup = bs(page, 'html.parser')
         table = soup.find("tbody", attrs={"class": "gel-long-primer"})
         self.league_table = []
-
         for a in range(int(get_league_size(str(league_name)))):
             team_stats = []
             for i in range(11):
